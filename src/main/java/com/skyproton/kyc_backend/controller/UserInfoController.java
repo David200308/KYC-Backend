@@ -43,6 +43,7 @@ public class UserInfoController {
     @PatchMapping("/{accountUuid}/verify")
     public ResponseEntity<ResUpdateDTO> updateUserInfoIsVerified(@PathVariable String accountUuid, @RequestBody ReqUpdateUserInfoStatusDTO data) {
         ResUpdateDTO res = userInfoService.updateUserInfoIsVerified(accountUuid, data.getIs_verified());
+        if (!res.getIs_success()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
         return ResponseEntity.ok(res);
     }
 

@@ -1,5 +1,8 @@
 package com.skyproton.kyc_backend.variable;
 
+import lombok.Getter;
+
+@Getter
 public enum AccountStatus {
     // "active", "unverified", "suspended", "blocked", "deleted"
     ACTIVE("ACTIVE"),
@@ -14,7 +17,4 @@ public enum AccountStatus {
         this.status = status;
     }
 
-    public String getStatus() {
-        return status;
-    }
 }

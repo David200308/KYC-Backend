@@ -5,6 +5,7 @@ import com.skyproton.kyc_backend.dto.account.ReqUpdateAccountStatusDTO;
 import com.skyproton.kyc_backend.dto.account.ResAccountDTO;
 import com.skyproton.kyc_backend.dto.ResUpdateDTO;
 import com.skyproton.kyc_backend.service.AccountService;
+import com.skyproton.kyc_backend.variable.AccountStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +43,7 @@ public class AccountController {
     @PatchMapping("/{uuid}/status")
     public ResponseEntity<ResUpdateDTO> updateAccountStatus(@PathVariable String uuid, @RequestBody ReqUpdateAccountStatusDTO data) {
         ResUpdateDTO res = accountService.updateAccountStatus(uuid, data.getStatus());
+        if (!res.getIs_success()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
         return ResponseEntity.ok(res);
     }
 

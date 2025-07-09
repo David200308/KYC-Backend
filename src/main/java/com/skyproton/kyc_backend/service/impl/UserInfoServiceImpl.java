@@ -67,7 +67,10 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public ResUpdateDTO updateUserInfoIsVerified(String uuid, Boolean isVerified) {
         try {
-            userInfoRepo.updateUserInfoVerifyStatus(accountRepo.findByUuid(uuid).getUser_info_uuid(), isVerified);
+            Account account = accountRepo.findByUuid(uuid);
+            if (account == null) throw new RuntimeException("Account not found with UUID: " + uuid);
+
+            userInfoRepo.updateUserInfoVerifyStatus(account.getUser_info_uuid(), isVerified);
             accountRepo.updateAccountStatusByUuid(
                     uuid,
                     isVerified ?
@@ -85,8 +88,8 @@ public class UserInfoServiceImpl implements UserInfoService {
             return mapper.mapToResUpdateDTO(
                     uuid,
                     UpdateField.ACCOUNT_AND_USERINFO_VERIFY_STATUS,
-                    true,
-                    "User Info & Account status updated successfully"
+                    false,
+                    "Failed to update User Info & Account status: " + e.getMessage()
             );
         }
     }

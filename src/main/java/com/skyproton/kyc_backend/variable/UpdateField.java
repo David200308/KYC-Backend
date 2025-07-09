@@ -1,5 +1,8 @@
 package com.skyproton.kyc_backend.variable;
 
+import lombok.Getter;
+
+@Getter
 public enum UpdateField {
     USERNAME("username"),
     PASSWORD("password"),
@@ -15,7 +18,4 @@ public enum UpdateField {
         this.field = field;
     }
 
-    public String getField() {
-        return field;
-    }
 }

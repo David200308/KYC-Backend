@@ -47,7 +47,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public ResUpdateDTO updateAccountStatus(String uuid, AccountStatus status) {
         try {
-            accountRepo.updateAccountStatusByUuid(uuid, status.name());
+            if (accountRepo.findByUuid(uuid) == null) throw new RuntimeException("Account not found with UUID: " + uuid);
+            if (status == AccountStatus.UNVERIFIED) throw new RuntimeException("No permission! User cannot modify status to UNVERIFIED");
 
             return mapper.mapToResUpdateDTO(
                     uuid,
